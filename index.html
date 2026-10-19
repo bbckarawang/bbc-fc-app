@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BBC-FC</title>
+
+  <!-- PWA Settings -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#EE1C25">
+  <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1mC50B-2kjzM8FXwTdsWPEyeGRNXMeu8x">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #1a1a1a;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Loading Screen Fotocopy */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .copier-container {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 4px solid #EE1C25;
+      border-radius: 16px;
+      background: #fafafa;
+      box-shadow: 0 8px 24px rgba(238, 28, 37, 0.2);
+      overflow: hidden;
+    }
+
+    .app-logo {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+
+    /* Sinar Laser Scanner Fotocopy */
+    .scanner-light {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(180deg, #EE1C25 0%, rgba(238, 28, 37, 0.4) 80%, rgba(255, 255, 255, 0) 100%);
+      box-shadow: 0 0 15px #EE1C25, 0 0 25px #EE1C25;
+      animation: scan 1.8s infinite ease-in-out;
+    }
+
+    @keyframes scan {
+      0% { top: 0%; opacity: 0.8; }
+      50% { top: 92%; opacity: 1; }
+      100% { top: 0%; opacity: 0.8; }
+    }
+
+    .loading-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #EE1C25;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .loading-text {
+      font-size: 13px;
+      color: #666;
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* Web App Iframe */
+    #app-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen Loading Animasi Scanner -->
+  <div id="loading-screen">
+    <div class="copier-container">
+      <img src="https://lh3.googleusercontent.com/d/1mC50B-2kjzM8FXwTdsWPEyeGRNXMeu8x" alt="BBC-FC Logo" class="app-logo">
+      <div class="scanner-light"></div>
+    </div>
+    <div class="loading-title">BBC-FC</div>
+    <div class="loading-text">Memindai dokumen... Mohon tunggu</div>
+  </div>
+
+  <!-- Main Iframe Google Apps Script -->
+  <iframe 
+    id="app-frame" 
+    src="https://script.google.com/a/macros/pertiwi.ac.id/s/AKfycbzE6a_fmSN97yWjiPaotXviNnDmBPku2CQQApi6BCs4wKbc0B1dR0ObyFWAy6uJyJMt/exec"
+    onload="hideLoading()">
+  </iframe>
+
+  <script>
+    function hideLoading() {
+      const loadingScreen = document.getElementById('loading-screen');
+      loadingScreen.style.opacity = '0';
+      setTimeout(() => {
+        loadingScreen.style.visibility = 'hidden';
+      }, 500);
+    }
+
+    // Register Service Worker untuk PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('SW terdaftar!'))
+          .catch(err => console.log('SW gagal:', err));
+      });
+    }
+  </script>
+</body>
+</html>

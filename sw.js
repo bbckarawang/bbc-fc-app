@@ -1,12 +1,18 @@
+// Memaksa Service Worker baru langsung aktif dan menghapus cache lama
 self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cache) => caches.delete(cache))
+      );
+    }).then(() => self.clients.claim())
+  );
 });
 
 self.addEventListener('fetch', (event) => {
-  // Melewati cache agar tidak mengganggu otentikasi Google Apps Script
   event.respondWith(fetch(event.request));
 });

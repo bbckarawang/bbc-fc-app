@@ -1,0 +1,22 @@
+{
+  "name": "BBC-FC App",
+  "short_name": "BBC-FC",
+  "description": "Aplikasi BBC-FC Google Apps Script",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#EE1C25",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://lh3.googleusercontent.com/d/1mC50B-2kjzM8FXwTdsWPEyeGRNXMeu8x",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/1mC50B-2kjzM8FXwTdsWPEyeGRNXMeu8x",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

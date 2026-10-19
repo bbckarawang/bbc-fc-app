@@ -2,7 +2,7 @@
   "name": "BBC-FC App",
   "short_name": "BBC-FC",
   "description": "Aplikasi BBC-FC Google Apps Script",
-  "start_url": "./index.html",
+  "start_url": "./index.html?v=2",
   "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
